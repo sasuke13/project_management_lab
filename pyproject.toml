@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "project"
+version = "0.1.0"
+description = ""
+authors = ["bogd1 <bgnydyn@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.6"
+flake8 = "^6.1.0"
+djangorestframework = "^3.14.0"
+psycopg2 = "^2.9.9"
+djangorestframework-simplejwt = "^5.3.0"
+python-dotenv = "^1.0.0"
+uuid = "^1.30"
+django-phone-field = "^1.8.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
