@@ -16,9 +16,9 @@ class Orders(models.Model):
     ]
 
     state = models.CharField(choices=ORDER_STATE, default='NW')
-    client = models.ForeignKey(User, on_delete=models.SET_NULL)
+    client = models.ForeignKey(User, related_name="orders", on_delete=models.SET_NULL, null=True)
     grant_date = models.DateField(null=True)
-    order_history = models.OneToOneField(to="States", on_delete=models.SET_NULL)
+    order_history = models.OneToOneField(to="States", related_name="orders", on_delete=models.SET_NULL, null=True)
 
 
 class States(models.Model):
