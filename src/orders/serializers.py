@@ -11,9 +11,10 @@ class ClientSerializer(serializers.ModelSerializer):
         fields = ('name', 'surname', 'email', 'phone_number', 'address')
 
 
-class OrdersModelSerializer(serializers.ModelSerializer):
+class OrdersSerializer(serializers.ModelSerializer):
     client = ClientSerializer()
 
     class Meta:
         model = Orders
-        fields = ('id', 'state', 'grant_date', 'client', 'order_history')
+        fields = '__all__'
+        read_only_fields = ('id', 'state', 'order_history', 'client', 'grant_date')
