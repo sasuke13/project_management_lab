@@ -2,8 +2,13 @@
 from rest_framework import serializers
 
 from accounts.models import User
-from .models import Orders
+from .models import Orders, States
 
+
+class OrderHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = States
+        fields = ('states',)
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,6 +18,7 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class OrdersSerializer(serializers.ModelSerializer):
     client = ClientSerializer()
+    order_history = OrderHistorySerializer()
 
     class Meta:
         model = Orders
