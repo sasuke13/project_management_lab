@@ -13,16 +13,46 @@ class OrdersListView(generics.ListAPIView):
     serializer_class = OrdersSerializer
 
 
-class SentOrdersListView(generics.ListAPIView):
-    queryset = Orders.objects.all().filter(state='SNT')
+class UserOrdersListView(generics.ListAPIView):
+    queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
 
-    def get(self, request, *args, **kwargs):
-        token = request.COOKIES.get('jwt')
+    def get_queryset(self):
+        token = self.request.COOKIES.get('jwt')
         payload = verify_user(token)
-        self.queryset.filter(client=payload['uuid'])
+        client_uuid = payload['uuid']
 
-        return super().get(request, *args, **kwargs)
+        queryset = Orders.objects.filter(client=client_uuid)
+
+        return queryset
+
+
+class SentOrdersListView(generics.ListAPIView):
+    queryset = Orders.objects.all()
+    serializer_class = OrdersSerializer
+
+    def get_queryset(self):
+        token = self.request.COOKIES.get('jwt')
+        payload = verify_user(token)
+        client_uuid = payload['uuid']
+
+        queryset = Orders.objects.filter(client=client_uuid, state='SNT')
+
+        return queryset
+
+
+class DeliveredOrdersListView(generics.ListAPIView):
+    queryset = Orders.objects.all()
+    serializer_class = OrdersSerializer
+
+    def get_queryset(self):
+        token = self.request.COOKIES.get('jwt')
+        payload = verify_user(token)
+        client_uuid = payload['uuid']
+
+        queryset = Orders.objects.filter(client=client_uuid, state='DLV')
+
+        return queryset
 
 
 class CreateOrderView(generics.CreateAPIView):
