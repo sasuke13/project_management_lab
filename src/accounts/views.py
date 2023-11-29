@@ -40,7 +40,6 @@ class LoginView(APIView):
 
         if not user.check_password(password):
             raise AuthenticationFailed('Incorrect password')
-
         payload = {
             'uuid': str(user.uuid),
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
