@@ -8,10 +8,21 @@ from orders.models import Orders, States
 from orders.serializers import OrdersSerializer
 
 
-# Create your views here.
 class OrdersListView(generics.ListAPIView):
     queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
+
+
+class SentOrdersListView(generics.ListAPIView):
+    queryset = Orders.objects.all().filter(state='SNT')
+    serializer_class = OrdersSerializer
+
+    def get(self, request, *args, **kwargs):
+        token = request.COOKIES.get('jwt')
+        payload = verify_user(token)
+        self.queryset.filter(client=payload['uuid'])
+
+        return super().get(request, *args, **kwargs)
 
 
 class CreateOrderView(generics.CreateAPIView):
