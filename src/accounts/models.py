@@ -12,7 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     surname = models.CharField(max_length=128)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
-    phone_number = PhoneField(unique=False)
+    phone_number = PhoneField(unique=True)
     address = models.CharField(max_length=128)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
