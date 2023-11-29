@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, SuperUserSerializer
 
 
 def verify_user(token):
@@ -18,6 +18,17 @@ def verify_user(token):
         raise AuthenticationFailed('Unauthenticated')
 
     return payload
+
+
+class CreateSuperuserView(APIView):
+    def post(self, request):
+        serializer = SuperUserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Superuser created successfully"})
+
+        return Response(serializer.errors)
 
 
 class RegisterView(APIView):
