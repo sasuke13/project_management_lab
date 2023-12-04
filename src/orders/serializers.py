@@ -8,7 +8,8 @@ from .models import Orders, States
 class OrderHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = States
-        fields = ('states',)
+        fields = ('states', 'changed_at')
+
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:

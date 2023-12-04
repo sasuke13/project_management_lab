@@ -1,6 +1,9 @@
+from datetime import datetime, timedelta
+
 from django.db import transaction
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from accounts.models import User
 from accounts.views import verify_user
@@ -11,6 +14,21 @@ from orders.serializers import OrdersSerializer
 class OrdersListView(generics.ListAPIView):
     queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
+
+    def get_queryset(self):
+        request_data = dict(self.request.GET.lists())
+        request_data = dict([(key, value[0]) for key, value in request_data.items()])
+
+        queryset = Orders.objects.all()
+
+        if request_data.get('days'):
+            days = request_data.pop('days')
+            today_date = datetime.now()
+            queryset = queryset.filter(created_at__range=[today_date - timedelta(days=float(days)), today_date])
+
+        queryset = queryset.filter(**request_data)
+
+        return queryset
 
 
 class UserOrdersListView(generics.ListAPIView):
