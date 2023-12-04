@@ -38,3 +38,30 @@ class SuperUserSerializer(serializers.ModelSerializer):
         instance = User.objects.create_superuser(**validated_data)
         instance.save()
         return instance
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['name', 'email', 'password', 'phone_number']
+
+        extra_kwargs = {
+            'name': {'required': False},
+            'email': {'required': False},
+            'password': {'write_only': True, 'required': False},
+            'phone_number': {'required': False},
+        }
+
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+
+        password = validated_data.get('password')
+
+        if password:
+            instance.set_password(password)
+
+        instance.save()
+        return instance
