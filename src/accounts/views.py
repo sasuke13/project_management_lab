@@ -1,11 +1,13 @@
 import datetime
 import jwt
+from rest_framework import status
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .exceptions import PasswordIsInvalid
 from .models import User
-from .serializers import UserSerializer, SuperUserSerializer
+from .serializers import UserSerializer, SuperUserSerializer, UpdateUserSerializer
 
 
 def verify_user(token):
@@ -35,7 +37,10 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        try:
+            serializer.save()
+        except PasswordIsInvalid as exception:
+            return Response({'error': exception.args[0]}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.data)
 
 
@@ -98,3 +103,26 @@ class LogoutView(APIView):
         }
 
         return response
+
+
+
+class UpdateUserView(APIView):
+
+    def put(self, request):
+        token = request.COOKIES.get('jwt')  # Assuming the token is in a cookie
+
+        if token:
+            user = verify_user(token)
+
+            if user:
+                user = User.objects.filter(pk=user['uuid']).first()
+                serializer = UpdateUserSerializer(user, data=request.data)
+
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response({'message': 'User updated successfully'})
+
+                return Response(serializer.errors)
+
+            return Response({'error': 'Invalid or expired token'})
+
