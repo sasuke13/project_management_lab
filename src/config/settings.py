@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'celery',
     'django_celery_beat',
+    'kombu.transport.redis',
 
     # Apps
     'accounts',
@@ -224,13 +225,8 @@ CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}"
 CELERY_IMPORTS = ('core.tasks',)
 
 CELERY_BEAT_SCHEDULE = {
-    'get_statistic_for_the_last_week': {
-        'task': 'core.tasks.get_statistic_for_the_last_week',
-        'schedule': crontab(hour='0', minute='0'),
-    },
-
     'get_statistic_for_the_last_month': {
-        'task': 'core.tasks.get_statistic_for_the_last_month',
+        'task': 'core.tasks.cancel_inactive_orders',
         'schedule': crontab(hour='0', minute='0'),
     },
 }
