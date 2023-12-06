@@ -105,7 +105,6 @@ class LogoutView(APIView):
         return response
 
 
-
 class UpdateUserView(APIView):
 
     def put(self, request):
@@ -125,4 +124,3 @@ class UpdateUserView(APIView):
                 return Response(serializer.errors)
 
             return Response({'error': 'Invalid or expired token'})
-

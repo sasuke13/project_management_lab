@@ -1,5 +1,18 @@
-import json
 import os
+
+from core.middleware import AuthMiddleWare
+from core.storage import add_user_to_session
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+import django
+from django.conf import settings
+
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
+if not settings.configured:
+    django.setup()
+
+import json
 import io
 
 import aiohttp
@@ -9,27 +22,28 @@ from dotenv import load_dotenv
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
+from core.models import BotAdmins
 
 load_dotenv()
 
 bot = Bot(os.environ.get('TELEGRAM_BOT_KEY'))
 dp = Dispatcher(bot)
+dp.middleware.setup(AuthMiddleWare())
 
-#
-# @dp.message_handler(commands=['start'])
-# async def start_handler(message: types.Message):
-#     engine = db.create_engine(db_url)
-#
-#     conn = engine.connect()
-#     output = conn.execute("SELECT * FROM public.core_botadmins")
-#     print(output.fetchall())
-    # user = await BotAdmins.objects.get(message.from_user.username)
 
-    # if user:
-    #     await bot.send_message(message.from_user.id, message.from_user.username)
-    #
-    # else:
-    #     await bot.send_message(message.from_user.id, message.from_user.first_name)
+@dp.message_handler(commands=['start'])
+async def start_handler(message: types.Message):
+    user = BotAdmins.objects.filter(tg_nickname=message.from_user.username).first()
+
+    if user:
+        await add_user_to_session(user.tg_nickname)
+        await bot.send_message(
+            message.from_user.id,
+            f"Hello, {message.from_user.first_name}, what can I do for you?"
+        )
+
+    else:
+        await bot.send_message(message.from_user.id, "You have no access to this bot!")
 
 
 @dp.message_handler(commands=['inner_menu'])
@@ -82,7 +96,7 @@ async def inner_menu_handler(message: types.Message):
 
 
 @dp.callback_query_handler(text_contains="Statistic")
-async def hello_callback_handler(callback: types.CallbackQuery):
+async def statistic_callback_handler(callback: types.CallbackQuery):
     endpoint_data = callback.data.split('_')[1]
     try:
         async with aiohttp.ClientSession() as session:
@@ -101,7 +115,7 @@ async def hello_callback_handler(callback: types.CallbackQuery):
 
 
 @dp.callback_query_handler(text_contains="Count")
-async def hello_callback_handler(callback: types.CallbackQuery):
+async def count_callback_handler(callback: types.CallbackQuery):
     endpoint_data = callback.data.split('_')[1]
     try:
         async with aiohttp.ClientSession() as session:
@@ -115,4 +129,5 @@ async def hello_callback_handler(callback: types.CallbackQuery):
         await callback.message.answer(text='Error connecting to the server. Please try again later.')
 
 
-executor.start_polling(dp)
+if __name__ == "__main__":
+    executor.start_polling(dp)

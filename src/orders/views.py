@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from django.db import transaction
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from accounts.models import User
 from accounts.views import verify_user
@@ -90,5 +89,7 @@ class CreateOrderView(generics.CreateAPIView):
             order = Orders.objects.create(state=state, client=client, order_history=order_history_instance)
 
         serializer = self.get_serializer(order)
-        return Response({'message': 'Order was successfully opened', 'order': serializer.data}, status=status.HTTP_201_CREATED)
-
+        return Response({
+            'message': 'Order was successfully opened',
+            'order': serializer.data
+        }, status=status.HTTP_201_CREATED)
