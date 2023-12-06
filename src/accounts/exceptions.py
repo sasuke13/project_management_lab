@@ -3,4 +3,3 @@ class PasswordIsInvalid(Exception):
 
     def __init__(self, message):
         super().__init__(message[0])
-

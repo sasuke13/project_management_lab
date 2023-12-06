@@ -96,7 +96,7 @@ async def inner_menu_handler(message: types.Message):
 
 
 @dp.callback_query_handler(text_contains="Statistic")
-async def hello_callback_handler(callback: types.CallbackQuery):
+async def statistic_callback_handler(callback: types.CallbackQuery):
     endpoint_data = callback.data.split('_')[1]
     try:
         async with aiohttp.ClientSession() as session:
@@ -115,7 +115,7 @@ async def hello_callback_handler(callback: types.CallbackQuery):
 
 
 @dp.callback_query_handler(text_contains="Count")
-async def hello_callback_handler(callback: types.CallbackQuery):
+async def count_callback_handler(callback: types.CallbackQuery):
     endpoint_data = callback.data.split('_')[1]
     try:
         async with aiohttp.ClientSession() as session:

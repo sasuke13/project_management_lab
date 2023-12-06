@@ -52,7 +52,6 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             'phone_number': {'required': False},
         }
 
-
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.email = validated_data.get('email', instance.email)
