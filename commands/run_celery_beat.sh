@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd src && celery -A config beat -l info
+cd src && celery -A core beat -l info

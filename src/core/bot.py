@@ -1,9 +1,10 @@
 import os
+import sys
 
-from core.middleware import AuthMiddleWare
-from core.storage import add_user_to_session
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+from .middleware import AuthMiddleWare
+from .storage import add_user_to_session
+sys.path.append('./src/')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'src.config.settings')
 import django
 from django.conf import settings
 

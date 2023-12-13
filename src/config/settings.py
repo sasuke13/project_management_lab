@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 
 from celery.schedules import crontab
+# from celery.schedules import crontab
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -131,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Kiev'
 
 USE_I18N = True
 

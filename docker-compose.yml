@@ -91,6 +91,17 @@ services:
       - redis
       - celery
 
+  bot:
+    build: .
+    command:
+      - ./commands/run_bot.sh
+    volumes:
+      - .:/backend
+    env_file:
+      - .env
+    depends_on:
+      - backend
+
 volumes:
   pg_data: { }
   pgadmin_data: { }
