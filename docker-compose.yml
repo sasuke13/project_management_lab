@@ -1,0 +1,107 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:8000"
+    volumes:
+      - .:/backend
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  pg_admin:
+    image: dpage/pgadmin4
+    container_name: pg_admin
+    ports:
+      - "5000:80"
+    env_file:
+      - .env
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+  redis:
+    image: redis
+    container_name: redis
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "6380:6379"
+
+  redis-admin:
+    image: rediscommander/redis-commander:latest
+    container_name: redisadmin
+    hostname: redisadmin
+    ports:
+      - "8092:8081"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery
+    command:
+      - ./commands/run_celery.sh
+    volumes:
+      - ./src:/backend/src
+      - ./commands:/backend/commands
+    restart: on-failure
+
+    depends_on:
+      - redis
+      - backend
+    links:
+      - backend
+
+    env_file:
+      - .env
+
+  celery-beat:
+    build: .
+    command:
+      - ./commands/run_celery_beat.sh
+    volumes:
+      - .:/backend
+    env_file:
+      - .env
+    depends_on:
+      - backend
+      - redis
+      - celery
+
+  bot:
+    build: .
+    command:
+      - ./commands/run_bot.sh
+    volumes:
+      - .:/backend
+    env_file:
+      - .env
+    depends_on:
+      - backend
+
+volumes:
+  pg_data: { }
+  pgadmin_data: { }

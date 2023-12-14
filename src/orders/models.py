@@ -28,4 +28,4 @@ class States(models.Model):
         models.CharField(max_length=20),
         blank=True
     )
-    changed_at = models.DateTimeField(auto_now=True)
+    changed_at = models.DateTimeField()
