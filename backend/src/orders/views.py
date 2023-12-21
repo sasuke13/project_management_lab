@@ -2,10 +2,9 @@ from datetime import datetime, timedelta
 
 from django.db import transaction
 from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from accounts.models import User
-from accounts.views import verify_user
 from orders.models import Orders, States
 from orders.serializers import OrdersSerializer
 
@@ -33,13 +32,25 @@ class OrdersListView(generics.ListAPIView):
 class UserOrdersListView(generics.ListAPIView):
     queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        token = self.request.COOKIES.get('jwt')
-        payload = verify_user(token)
-        client_uuid = payload['uuid']
+        queryset = Orders.objects.filter(client=self.request.user).exclude(state__in=['CNL', 'PD'])
 
-        queryset = Orders.objects.filter(client=client_uuid)
+        return queryset
+
+
+class SpecifiedUserOrdersListView(generics.ListAPIView):
+    queryset = Orders.objects.all()
+    serializer_class = OrdersSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        request_data = dict(self.request.GET.lists())
+        request_data = dict([(key, value[0]) for key, value in request_data.items()])
+
+        queryset = Orders.objects.filter(client=self.request.user)
+        queryset = queryset.filter(**request_data)
 
         return queryset
 
@@ -47,13 +58,10 @@ class UserOrdersListView(generics.ListAPIView):
 class SentOrdersListView(generics.ListAPIView):
     queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        token = self.request.COOKIES.get('jwt')
-        payload = verify_user(token)
-        client_uuid = payload['uuid']
-
-        queryset = Orders.objects.filter(client=client_uuid, state='SNT')
+        queryset = Orders.objects.filter(client=self.request.user, state='SNT')
 
         return queryset
 
@@ -61,13 +69,10 @@ class SentOrdersListView(generics.ListAPIView):
 class DeliveredOrdersListView(generics.ListAPIView):
     queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        token = self.request.COOKIES.get('jwt')
-        payload = verify_user(token)
-        client_uuid = payload['uuid']
-
-        queryset = Orders.objects.filter(client=client_uuid, state='DLV')
+        queryset = Orders.objects.filter(client=self.request.user, state='DLV')
 
         return queryset
 
@@ -75,13 +80,12 @@ class DeliveredOrdersListView(generics.ListAPIView):
 class CreateOrderView(generics.CreateAPIView):
     queryset = Orders.objects.all()
     serializer_class = OrdersSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         state = 'NW'
 
-        token = request.COOKIES.get('jwt')
-        payload = verify_user(token)
-        client = User.objects.filter(uuid=payload['uuid']).first()
+        client = request.user
 
         with transaction.atomic():
             order_history_instance = States.objects.create(states=[state])

@@ -1,10 +1,11 @@
 from django.urls import path
 
 from orders.views import OrdersListView, CreateOrderView, SentOrdersListView, DeliveredOrdersListView, \
-    UserOrdersListView
+    UserOrdersListView, SpecifiedUserOrdersListView
 
 urlpatterns = [
     path('', UserOrdersListView.as_view(), name='user_orders_list_view'),
+    path('specified/', SpecifiedUserOrdersListView.as_view(), name='specified_user_orders_list_view'),
     path('statistic/', OrdersListView.as_view(), name='orders_list_view'),
     path('create/', CreateOrderView.as_view(), name='orders_list_view'),
     path('state/sent/', SentOrdersListView.as_view(), name='user_sent_orders_list_view'),

@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher.handler import CancelHandler
 from aiogram.dispatcher.middlewares import BaseMiddleware
 
-from core.storage import check_auth_user
+from .storage import check_auth_user
 
 
 class AuthMiddleWare(BaseMiddleware):

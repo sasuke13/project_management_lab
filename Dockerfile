@@ -22,7 +22,6 @@ RUN poetry install --no-root
 COPY backend/src ./src
 COPY ./commands ./commands
 
-
 RUN chmod +x commands/*.sh
 
 CMD ["bash", "commands/start_server.sh"]
