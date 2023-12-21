@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './components/styles.css';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-const LOGIN_URL = 'https://f5a6-46-219-228-232.ngrok-free.app/api/v1/authorization/login/';
+const LOGIN_URL = 'http://localhost:80/api/v1/authorization/login/';
 const Login = () => {
 
   const dispatch = useDispatch();

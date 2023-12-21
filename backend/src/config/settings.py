@@ -231,8 +231,3 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour='0', minute='0'),
     },
 }
-
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://f5a6-46-219-228-232.ngrok-free.app',
-]

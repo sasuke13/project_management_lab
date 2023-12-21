@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import "./Register.css"
 
 function Register() {
-  const REGISTER_URL = 'https://f5a6-46-219-228-232.ngrok-free.app/api/v1/authorization/register/'
+  const REGISTER_URL = 'http://localhost:80/api/v1/authorization/register/'
   const dispatch = useDispatch();
 
   const navigate = useNavigate();

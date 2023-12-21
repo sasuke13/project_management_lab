@@ -37,7 +37,7 @@ function MyOrders(props) {
 
 const [orders, setOrders]=useState('');
   useEffect(() => {
-    axios.get('https://f5a6-46-219-228-232.ngrok-free.app/api/v1/orders/',{
+    axios.get('http://localhost:80/api/v1/orders/',{
       withCredentials: true,
       baseURL: URL,
       headers: {

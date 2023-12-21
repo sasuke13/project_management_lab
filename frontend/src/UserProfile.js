@@ -15,7 +15,7 @@ const UserProfile = () => {
   }
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
-  const CHANGEINFO_URL='https://f5a6-46-219-228-232.ngrok-free.app/api/v1/authorization/update_user/';
+  const CHANGEINFO_URL='http://localhost:80/api/v1/authorization/update_user/';
   const [surname, setSurname]=useState('');
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -41,7 +41,7 @@ const UserProfile = () => {
         }
       );
       console.log(response?.data);
-      const updatedResponse = await axios.get('https://f5a6-46-219-228-232.ngrok-free.app/api/v1/authorization/user/',{
+      const updatedResponse = await axios.get('http://localhost:80/api/v1/authorization/user/',{
         withCredentials: true,
         baseURL: URL,
         headers: {
@@ -67,7 +67,7 @@ const UserProfile = () => {
   
 
   useEffect(() => {
-    axios.get('https://f5a6-46-219-228-232.ngrok-free.app/api/v1/authorization/user/',{
+    axios.get('http://localhost:80/api/v1/authorization/user/',{
       withCredentials: true,
       baseURL: URL,
       headers: {

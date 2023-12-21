@@ -38,7 +38,7 @@ const navigate=useNavigate();
       };
 
       useEffect(() => {
-        axios.get('https://f5a6-46-219-228-232.ngrok-free.app/api/v1/authorization/user/',{
+        axios.get('http://localhost:80/api/v1/authorization/user/',{
           withCredentials: true,
           baseURL: URL,
           headers: {
@@ -60,7 +60,7 @@ const navigate=useNavigate();
         setOrderData((prevData) => ({ ...prevData, [name]: value }));
       };
       const axiosInstance = axios.create({
-        baseURL: 'https://f5a6-46-219-228-232.ngrok-free.app/api/v1/orders/',
+        baseURL: 'http://localhost:80/api/v1/orders/',
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${accessToken}`,
