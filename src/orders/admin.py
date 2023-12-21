@@ -4,8 +4,7 @@ from orders.models import Orders, States
 
 
 class StatesModelAdmin(admin.ModelAdmin):
-    fields = ['states', 'changed_at']
-
+    fields = ['states']
 
 
 admin.site.register(Orders)

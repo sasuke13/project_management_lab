@@ -1,12 +1,11 @@
-import datetime
 import jwt
 from rest_framework import status
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from .exceptions import PasswordIsInvalid
-from .models import User
 from .serializers import UserSerializer, SuperUserSerializer, UpdateUserSerializer
 
 
@@ -44,51 +43,11 @@ class RegisterView(APIView):
         return Response(serializer.data)
 
 
-class LoginView(APIView):
-    def post(self, request):
-        email = request.data['email']
-        password = request.data['password']
-
-        user = User.objects.filter(email=email, is_active=True).first()
-
-        if user is None:
-            raise AuthenticationFailed('User not found')
-
-        if not user.check_password(password):
-            raise AuthenticationFailed('Incorrect password')
-        payload = {
-            'uuid': str(user.uuid),
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.utcnow()
-        }
-
-        token = jwt.encode(payload, 'secret', algorithm='HS256')
-
-        response = Response()
-
-        response.set_cookie(key='jwt', value=token, httponly=True)
-        response.data = {
-            'jwt': token
-        }
-
-        return response
-
-
 class UserView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        token = request.COOKIES.get('jwt')
-
-        if not token:
-            raise AuthenticationFailed('Unauthenticated')
-
-        try:
-            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Unauthenticated')
-
-        user = User.objects.filter(uuid=payload['uuid']).first()
-        serializer = UserSerializer(user)
+        serializer = UserSerializer(request.user)
 
         return Response(serializer.data)
 
@@ -106,21 +65,13 @@ class LogoutView(APIView):
 
 
 class UpdateUserView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def put(self, request):
-        token = request.COOKIES.get('jwt')  # Assuming the token is in a cookie
+        serializer = UpdateUserSerializer(request.user, data=request.data)
 
-        if token:
-            user = verify_user(token)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'User updated successfully'})
 
-            if user:
-                user = User.objects.filter(pk=user['uuid']).first()
-                serializer = UpdateUserSerializer(user, data=request.data)
-
-                if serializer.is_valid():
-                    serializer.save()
-                    return Response({'message': 'User updated successfully'})
-
-                return Response(serializer.errors)
-
-            return Response({'error': 'Invalid or expired token'})
+        return Response(serializer.errors)
