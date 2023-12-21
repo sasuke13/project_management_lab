@@ -6,4 +6,3 @@ class BotAdmins(models.Model):
 
     class Meta:
         app_label = 'core'  # Make sure this matches the app name the model belongs to
-

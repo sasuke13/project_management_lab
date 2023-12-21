@@ -26,6 +26,6 @@ class Orders(models.Model):
 class States(models.Model):
     states = ArrayField(
         models.CharField(max_length=20),
-        blank=True
+        default=list
     )
-    changed_at = models.DateTimeField()
+    changed_at = models.DateTimeField(auto_now=True)

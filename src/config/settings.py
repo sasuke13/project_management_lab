@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-*hip#f@nh1%u^7@oorl61m#d7-&^=8#3^uw1atq@e_ls=4zd5m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -231,3 +231,8 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour='0', minute='0'),
     },
 }
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://f5a6-46-219-228-232.ngrok-free.app',
+]
