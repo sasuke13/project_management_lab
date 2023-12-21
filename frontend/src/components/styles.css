@@ -1,0 +1,323 @@
+
+.header {
+    background-color: rgb(237, 236, 236); /* Replace 'your-image.jpg' with your image file path */
+    /* background-size: cover; */
+    /* background-position: center; */
+    color: #959595; 
+    text-align: center;
+    /* padding: 100px 0; */
+    /* max-width: 100%;  */
+    /* margin: 0 auto;  */
+    font-size: 25px;
+    font-weight: bold;
+    /* border-radius: 50%; */
+    }
+.site-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 30px;
+    color: rgb(255, 240, 240);  
+    font-family:Times New Roman, serif;
+    text-align: left;
+    }
+.button {
+    background-color: rgb(206, 202, 203);
+    border: none;
+    color: rgb(19, 19, 19);
+    padding: 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin:  15px 5px ;
+    cursor: pointer;
+    border-radius: 12px;
+    width:130px;
+    height:25px ;
+    }
+
+#search{
+    border-radius: 10px; 
+    font-size: 14px;
+    /* margin-top: 20px; */
+    width: 140px;
+    display: flex; 
+    align-items: center;
+}
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background-color: #969090;
+font-size: 19px;
+font-family:Times New Roman, serif;
+}
+
+li {
+float: left;
+}
+li a {
+display: block;
+color: white;
+font-family:Times New Roman, serif;
+text-align: center;
+padding: 5px 35px;
+text-decoration: none;
+}
+
+li a:hover:not(.active) {
+background-color: #111;
+}
+
+p a{
+display: block;
+color: rgb(212, 209, 209);
+font-family:Times New Roman, serif;
+padding: 5px 25px;
+}
+
+.block {
+    width: 350px; 
+    height: 480px; 
+    background-color: rgb(113, 22, 42);
+    margin: 7px 5px;
+    padding: 20px;
+    color: rgb(206, 206, 202);
+    border: 6px solid rgb(113, 22, 42);
+    border-radius: 40px; 
+    cursor: ne-resize;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    top: 100; /* Зверху (верхній край контейнера) */
+    left: 50; /* Зліва (лівий край контейнера) */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.login {
+    width: 500px; 
+    height: 650px;
+    background:linear-gradient( rgb(150, 108, 117),  rgb(113, 22, 42));
+    margin: 5px 25px;
+    padding-top: 0;
+    padding: 10px;
+    color: rgb(206, 206, 202);
+    /* border: 6px solid rgb(113, 22, 42); */
+    border-radius: 40px; 
+    cursor: ne-resize;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 22px;
+    top: 100; /* Зверху (верхній край контейнера) */
+    left: 50; /* Зліва (лівий край контейнера) */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.login-position{
+    display: grid;
+      place-items: center;
+}
+.delivery{
+    width: 50%; 
+    height: 400px; 
+    margin: 10px 50px;
+    margin-left: 150px;
+}
+.slider-container {
+    display: flex;
+    width: 200%;
+}
+
+.slider {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.slider.active {
+    background-color: #b8adad;
+}
+.container{
+    background-color: rgb(222, 216, 216); /* Beetroot-like color */
+    color: #d9d4d4; /* White text */
+    padding: 10px;
+    border-radius: 20px; /* Rounded corners */
+    font-family:Times New Roman, serif;
+    
+}
+
+p {
+font-family:Times New Roman, serif;
+padding: 5px 10px;
+font-size: 20px;
+}
+
+a{
+color: rgb(227, 175, 175);
+font-family:Times New Roman, serif;
+padding: 2px 150px;
+text-decoration: none; 
+}
+
+.navbar {
+    background-color: rgb(113, 22, 42);
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly; 
+  }
+  .nav-item {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  .nav-logout{
+    font-weight: bold;
+  }
+
+  .rounded-button {
+    border-radius: 50%;
+    vertical-align: middle;
+    /* margin-right: 0px; */
+}
+
+ .rounded-image{
+    border-radius: 50%;
+    width: 45px; 
+    height: 50px;
+    vertical-align: middle;
+    /* margin-right: 20px; */
+ }
+
+ 
+ .slick-slide img {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.order-container {
+    background-color: #e1dfdf;
+    margin-bottom: 10px;
+    width: 600px;
+    font-size: 20px;
+    padding: 15px;
+    margin-left: 10%;
+    margin-top: 150px;
+    text-align: center;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 40px; 
+    font-family: "Times New Roman", Times, serif;
+    height: 200px;
+    /* border: 4px solid rgb(113, 22, 42); */
+    /* border-bottom: 1px solid rgb(85, 83, 83) ; */
+}
+
+.order-title {
+    color: #040404;
+    text-align: left;
+}
+
+.order-content {
+    /* border: solid rgb(255, 255, 255) 1px; */
+    font-size: 20px;
+    padding: 30px;
+    text-align: left;
+}
+.user-profile{
+    width: 40%; 
+    height: 460px; 
+    background:linear-gradient( rgb(150, 108, 117),  rgb(113, 22, 42));
+   
+    margin: 7px 5px;
+    padding: 20px;
+    color: rgb(206, 206, 202);
+    /* border: 6px solid rgb(113, 22, 42); */
+    border-radius: 40px; 
+    cursor: ne-resize;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 10%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    
+}
+.option{
+    background-color: rgb(206, 202, 203);
+    border: none;
+    color: rgb(19, 19, 19);
+    padding: 14px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 19px;
+    margin:  15px 5px ;
+    cursor: pointer;
+    border-radius: 12px;
+    width: 170px;
+    height:25px;
+}
+
+.logout{
+    text-align: right;
+    margin-right: 49px;
+    width: 90%;
+    left: 10px;
+    vertical-align: middle;
+}
+.search{
+    margin-top: 15px;
+}
+
+.vertical-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f7f7;
+    padding: 20px;
+    width: 250px;
+    height: 100%;
+    padding-top: 40px;
+    padding-left: 90px;
+    /* border: 1px solid rgb(167, 153, 156) ; */
+  }
+  
+  .menu-item {
+    color: rgb(113, 22, 42);
+    text-decoration: none;
+    font-size: 19px;
+    font-weight: bold;
+    padding: 30px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    border: 1px solid rgb(221, 218, 218) ;
+    width: 200px;
+  }
+  
+  .menu-item:hover {
+    background-color: #cfcaca;
+  }
+  .MyOrders{
+    margin-bottom: 10px;
+    font-size: 20px;
+    padding-top: 50px;
+    margin-left: 10%;
+    margin-top: 1%;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .delivery-info-container{
+    width: 50%; 
+    height: 50%; 
+    background-color: rgb(206, 206, 206);
+    margin: 7px 5px;
+    padding: 20px;
+    border-radius: 40px; 
+    cursor: ne-resize;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    margin-left: 25%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  }
+  .change-info{
+    padding: 10px;
+  }

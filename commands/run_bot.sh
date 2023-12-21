@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python script.py
+cd backend && python script.py
